@@ -117,20 +117,17 @@ https://<env-name>.<container-id>.<region>.azurecontainerapps.io
 azd down
 ```
 
+## MCP란 무엇인가?
 
-## What is MCP?
-The Model Context Protocol (MCP) is a protocol that allows different AI models and tools to communicate with each other. It provides a standardized way for models to share information and collaborate on tasks. The MCP server acts as a bridge between different models and tools, allowing them to work together seamlessly.
+**Model Context Protocol (MCP)**는 서로 다른 AI 모델과 도구들이 상호 통신할 수 있도록 해주는 프로토콜입니다. MCP는 모델 간에 정보를 공유하고 목표 달성을 위한 협업이 가능하도록 하는 표준화된 방법을 제공합니다. MCP 서버는 다양한 모델과 도구를 이어주는 브릿지 역할을 하며, 이들이 원활하게 함께 작동할 수 있도록 지원합니다.
 
-Below is the architecture diagram for a typical MCP server setup:
+아래는 일반적인 MCP 서버 구성을 보여주는 아키텍처 다이어그램입니다.
 
 <!-- Centered image for visual emphasis -->
 ![MCP ACA Architecture](./docs/mcp-container-arch.png)
 
-
-
-
 > [!IMPORTANT]
-> (*) This guide implements only the SSE MCP server. The MCP host and clients are not provided. If you are looking for a complete solution, with a custom MCP host, client and both HTTP and SSE MCP servers please check out this other [repository](https://github.com/manekinekko/azure-container-apps-ai-mcp).
+> (*) 이 저장소는 SSE(Server-Sent Events)기반 MCP 서버 구축만을 다룹니다. MCP 호스트와 MCP 클라이언트 구축에 대한 가이드는 포함되어 있지 않습니다. 커스텀 MCP 호스트, 클라이언트, HTTP 및 SSE MCP 서버를 Azure OpenAI 사용해 구축하고 싶다면 [샘플 저장소]((https://github.com/manekinekko/azure-container-apps-ai-mcp)를 참고해 주세요.
 
 ## Other installation options
 
