@@ -15,38 +15,51 @@ page_type: sample
 urlFragment: mcp-container-ts
 ---
 -->
-# Getting Started with Remote MCP Servers using Azure Container Apps (Node.js/TypeScript)
+# Azure Container Apps, Node.js/TypeScript를 사용한 일정관리 MCP 서버 만들기
 
-This is a quick start guide that provides the basic building blocks to set up a remote Model Context Protocol (MCP) server using Azure Container Apps. The MCP server is built using Node.js and TypeScript, and it can be used to run various tools and services in a serverless environment.
+이 저장소는 일정관리 Model Context Protocol(MCP) 서버를 구축하기 위한 방법을 설명합니다.
+주요 기술스택은 Node.js와 TypeScript이며, 이 저장소를 템플릿으로 활용하면 서버리스 환경에서 Node.js/TypeScript 개발자들도 손쉽게 MCP 서버를 구축할 수 있게 됩니다.
 
-## Prerequisites
-1. Install [VS Code](https://code.visualstudio.com/)
-2. Install [GitHub Copilot](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) and [GitHub Copilot Chat](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat) extensions
-3. Install the [Azure Developer CLI](https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd) (azd)
+## 사전 준비
 
-## Setup Instructions
-You can run these commands from the VSCode Terminal 
-1. Clone this repository
+1. [VS Code](https://code.visualstudio.com/) 설치
+2. [GitHub Copilot](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot)과 [GitHub Copilot Chat](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat) 익스텐션 설치
+3. [Azure Developer CLI](https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd)(azd) 설치
+
+## 개발 환경 설정
+
+VS Code를 열고 터미널에 다음 명령어를 입력하여 개발에 필요한 환경을 구성합니다.
+
+1. 저장소 클론
+
 ```cmd
 git clone https://github.com/azure-samples/mcp-container-ts.git
 ```
-2. Log in to your Azure account
+
+2. Azure 계정에 로그인
+
 ```cmd
 azd auth login
 ```
-3. Provision and deploy the project (ensure you are in the folder of the cloned repo when running this command):
-```cmd 
+
+3. 프로젝트 프로비저닝 및 배포 (명령어는 클론한 리포지토리 안에서 실행)
+
+```cmd
 azd up
 ```
-4. Once the deployment is complete, you can access the MCP server using the URL provided in the output. The URL will look something like this:
+
+4. 성공적으로 배포가 완료되면, terminal에 출력된 URL을 통해 MCP 서버에 접근할 수 있습니다. URL은 다음과 같은 형식입니다.
+
 ```cmd
 https://<env-name>.<container-id>.<region>.azurecontainerapps.io
 ```
-5. You can configure the MCP server in your local VS Code environment by adding the URL to the `mcp.json` file or manually adding it as described in the previous section:
+
+5. VS Code의 `mcp.json` 파일을 열고 다음과 같이 MCP 서버의 URL을 추가하면 MCP 서버를 사용할 수 있습니다.
+
 ```json
 {
   "servers": {
-    "mcp-server-sse-remote": {
+    "todo-mcp-server-sse-remote": {
       "type": "sse",
       "url": "https://<your-app-name>.<region>.azurecontainerapps.io/sse"
     }
@@ -55,14 +68,28 @@ https://<env-name>.<container-id>.<region>.azurecontainerapps.io
 ```
 
 > [!NOTE]
-> The URL for the MCP server will be different for each deployment. Make sure to update the URL in the `mcp.json` file or in your MCP client configuration accordingly.
- 
-6. If everything is configured correcly, you should see something like the below when prompting GitHub Copilot in Agent mode:
+> 이 템플릿을 사용하여 배포한 MCP 서버는 Azure Container Apps에서 실행되기 때문에 MCP 서버의 URL은 배포마다 다를 수 있습니다. 새로운 배포를 하면 `mcp.json` 파일이나 MCP 클라이언트 설정에서 URL을 적절히 업데이트해야 합니다.
+
+6. Azure Container Apps에 배포한 원격 MCP 서버가 제대로 VS Code(MCP Host)에 연동되었다면 Configure Tools 아이콘(연장 아이콘)을 클릭시 다음과 같은 메뉴를 볼 수 있습니다.
   
 <!-- Centered image for visual emphasis -->
-![MCP and GHCP in Action](./docs/ghcp-mcp-in-action.png)
+![Configure Tools](./docs/todo-mcp-list.png)
 
-8. If you were simply testing the deployment, you can remove and clean up all deployed resources by running the following command to avoid incurring any costs:
+7. 또한 GitHub Copilot Chat의 Agent 모드에서도 채팅창(MCP Client)에 프롬프트를 입력해 일정관리 작업을 할 수 있게 됩니다.
+
+<!-- Centered image for visual emphasis -->
+![Todo MCP Scenario 1](./docs/todo-mcp-test-1.png)
+
+<!-- Centered image for visual emphasis -->
+![Todo MCP Scenario 2](./docs/todo-mcp-test-2.png)
+
+<!-- Centered image for visual emphasis -->
+![Todo MCP Scenario 3](./docs/todo-mcp-test-3.png)
+
+<!-- Centered image for visual emphasis -->
+![Todo MCP Scenario 4](./docs/todo-mcp-test-4.png)
+
+8. 템플릿이 잘 동작하는지 테스트 용으로 본 MCP를 배포한 경우엔, 다음 명령어를 실행하여 배포된 모든 리소스를 제거하고 정리할 수 있습니다. 추가 과금이 되지 않길 원한다면 아래 명령어를 잊지 말고 실행해주세요.
 
 ```bash
 azd down
