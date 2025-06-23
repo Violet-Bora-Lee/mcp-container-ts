@@ -18,13 +18,35 @@ urlFragment: mcp-container-ts
 # Azure Container Apps, Node.js/TypeScript를 사용한 일정관리 MCP 서버 만들기
 
 이 저장소는 일정관리 Model Context Protocol(MCP) 서버를 구축하기 위한 방법을 설명합니다.
-주요 기술스택은 Node.js와 TypeScript이며, 이 저장소를 템플릿으로 활용하면 서버리스 환경에서 Node.js/TypeScript 개발자들도 손쉽게 MCP 서버를 구축할 수 있게 됩니다.
+주요 기술스택은 Node.js와 TypeScript이며, 이 저장소를 템플릿으로 활용하면 Node.js/TypeScript 개발자들도 쉽게 MCP 서버를 구축하고, 이해할 수 있게 됩니다.
 
 ## 사전 준비
 
 1. [VS Code](https://code.visualstudio.com/) 설치
 2. [GitHub Copilot](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot)과 [GitHub Copilot Chat](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat) 익스텐션 설치
 3. [Azure Developer CLI](https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd)(azd) 설치
+
+## 인프라 구성
+
+이 프로젝트는 Azure Container Apps를 사용하여 MCP(Model Context Protocol) 서버를 서버리스로 배포하고 있습니다.
+
+프로젝트의 인프라 구성은 다음과 같습니다.
+
+1. Azure Container Apps - [`resources.bicep`](./infra/resources.bicep) 파일에서 정의된 서버리스 컨테이너 환경
+2. Azure Container Registry - 컨테이너 이미지 저장을 위한 레지스트리
+3. Azure Monitor - 로그 분석 및 애플리케이션 인사이트를 위한 모니터링 도구
+4. Managed Identity - 보안 액세스를 위한 관리형 ID
+
+별도의 데이터베이스는 사용하지 않으며, MCP 서버는 인메모리 SQLite 데이터베이스를 사용하여 상태를 관리합니다. 이 데이터베이스는 서버가 재시작되면 초기화됩니다.
+
+```ts
+// src/db.ts 참고
+const db = new Database(":memory:", {
+  verbose: log.info,
+});
+```
+
+데이터 영속성이 필요한 경우, Azure Cosmos DB나 Azure SQL Database와 같은 외부 데이터베이스를 추가로 설정할 수 있습니다. 이 경우, MCP 서버의 코드에서 데이터베이스 연결을 설정하고, 필요한 CRUD 작업을 구현해야 합니다.
 
 ## 개발 환경 설정
 
