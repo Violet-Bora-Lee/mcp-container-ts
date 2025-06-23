@@ -129,9 +129,9 @@ azd down
 > [!IMPORTANT]
 > (*) 이 저장소는 SSE(Server-Sent Events)기반 MCP 서버 구축만을 다룹니다. MCP 호스트와 MCP 클라이언트 구축에 대한 가이드는 포함되어 있지 않습니다. 커스텀 MCP 호스트, 클라이언트, HTTP 및 SSE MCP 서버를 Azure OpenAI 사용해 구축하고 싶다면 [샘플 저장소]((https://github.com/manekinekko/azure-container-apps-ai-mcp)를 참고해 주세요.
 
-## Other installation options
+## 기타 배포 옵션
 
-You have a few other options besides azd up locally for getting started with this template. The quickest way to get started is GitHub Codespaces, since it will setup all the tools for you, but you can also [set it up locally](#local-environment).
+명령창에 `azd up`을 입력해 Azure Container Apps에 MCP 서버를 배포하는 것 이외에도 몇가지 방법을 사용해 MCP 서버를 구동 혹은 배포할 수 있습니다. 가장 빠르게 서버를 구동하고 싶다면 모든 툴이 구비된 GitHub Codespaces를 사용하는게 좋습니다. 당연히 [로컬 환경에서 서버를 시작](#local-environment)하는것도 가능합니다.
 
 ### GitHub Codespaces
 You can run this template virtually by using GitHub Codespaces. The button will open a web-based VS Code instance in your browser:
@@ -163,40 +163,38 @@ A related option is VS Code Dev Containers, which will open the project in your 
 npm start
 ```
 
-### Local Environment
+### 로컬에서 서버 구동
 
-If you prefer to run the MCP server locally, you can do so by following these steps:
+다음 가이드를 따라하면 로컬 환경에서 MCP 서버를 구동하는 것도 가능합니다.
 
-#### Prerequisites
+#### 사전 준비
 
-You need to have the following tools installed on your local machine:
-- [Node.js](https://nodejs.org/en/download/) (version 23 or higher) and npm 
-- [Docker](https://docs.docker.com/get-started/get-docker/) (recommended for running the MCP server)
+- 23 버전 이상의 [Node.js](https://nodejs.org/en/download/)와 [npm](https://www.npmjs.com/get-npm)
+- [Docker](https://docs.docker.com/get-started/get-docker/)
 
 
-1. Clone this repository:
+1. 저장소 클론 및 프로젝트 폴더로 이동
 
 ```bash
 git clone https://github.com/Azure-Samples/mcp-container-ts
 cd mcp-container-ts
 ```
 
-2. Open the project folder
-
-2. Install dependencies
+2. 의존성 패키지 설치
 
 ```bash
 npm install
 ```
 
-3. Start the server
+3. 로컬 MCP 서버 시작
 
 ```bash
 npm start
 ```
 
 > [!NOTE]
-> When the applications starts, the server will create an [in-memory SQLite](https://www.sqlite.org/inmemorydb.html) database. This database is used to store the state of the tools and their interactions with the MCP server.
+> 서버가 실행되면서 [인메모리 SQLite](https://www.sqlite.org/inmemorydb.html)도 같이 생성됩니다. 이 데이터베이스엔 일정관리 MCP 서버에 등록된 여러 툴(addTodo, listTodos, completeTodo, updateTodoText, deleteTodo)이 동작하며 변경된 일정 정보가 기록됩니다.
+
 
 ## Test your MCP server with desktop MCP Clients
 
